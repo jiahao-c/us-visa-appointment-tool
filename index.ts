@@ -10,7 +10,7 @@ const main = async () => {
     let location = "Vancouver";
     let lowerLimitDate = new Date("1 September, 2022");
     try {
-        const browser = await chromium.launch({ headless: false, slowMo: 600, channel: 'msedge' });
+        const browser = await chromium.launch({ headless: true, slowMo: 600, channel: 'chrome' });
         const page = await browser.newPage();
         await page.goto('https://ais.usvisa-info.com/en-ca/niv/users/sign_in');
         const userEmailInput = page.locator('#user_email');
