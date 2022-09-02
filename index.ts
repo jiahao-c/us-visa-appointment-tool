@@ -1,6 +1,8 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { chromium } from "playwright";
 import type {Page} from "playwright";
-import { genRandomInterval, sendNotification } from "./util"
+import { genRandomInterval, sendNotification } from "./util.js";
 
 
 const main = async () => {
@@ -15,8 +17,8 @@ const main = async () => {
         const userPasswordInput = page.locator('#user_password');
         const policyCheckbox = page.locator('#policy_confirmed');
         const loginButton = page.locator('[name=commit]');
-        await userEmailInput.fill(process.env.userEmail);
-        await userPasswordInput.fill(process.env.password);
+        await userEmailInput.fill(process.env.USER_EMAIL);
+        await userPasswordInput.fill(process.env.USER_PASSWORD);
         await policyCheckbox.check({ force: true });
         await loginButton.click();
 
@@ -107,7 +109,7 @@ const main = async () => {
         }
         await browser.close();
     } catch (err) {
-        sendNotification(`Error: ${JSON.stringify(err)}`);
+        console.log(`Error: ${JSON.stringify(err)}`);
     }
 }
 
