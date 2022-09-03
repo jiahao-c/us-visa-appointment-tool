@@ -107,7 +107,9 @@ const main = async () => {
             sendNotification("No appointments found");
         }
         await browser.close();
-        setTimeout(main, genRandomTimeout());
+        const timeOut = genRandomTimeout();
+        sendNotification(`Will try agin in ${timeOut} minutes`);
+        setTimeout(main, timeOut*60*1000);
     } catch (err) {
         console.log(`Error: ${JSON.stringify(err)}`);
     }
