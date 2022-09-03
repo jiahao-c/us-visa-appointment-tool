@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export function genRandomInterval() {
-  const min = 3, max = 20;
+  const min = 3, max = 10;
   return Math.floor(Math.random() * (max - min) + min);
 }
 

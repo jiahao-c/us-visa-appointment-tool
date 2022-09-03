@@ -10,7 +10,8 @@ const main = async () => {
     let location = "Vancouver";
     let lowerLimitDate = new Date("1 September, 2022");
     try {
-        const browser = await chromium.launch({ headless: true, slowMo: 600, channel: 'chrome' });
+        const browser = await chromium.launch({ headless: false, slowMo: 600, channel: 'msedge' });
+        console.log("browser launched")
         const page = await browser.newPage();
         await page.goto('https://ais.usvisa-info.com/en-ca/niv/users/sign_in');
         const userEmailInput = page.locator('#user_email');
@@ -29,7 +30,7 @@ const main = async () => {
             const currentAppointmentText = currentAppointmentDivContent.split('</strong>')[1];
             const _currentAppointmentDate = currentAppointmentText.split(',')[0] + ' ' + currentAppointmentText.split(',')[1];
             currentAppointmentDate = new Date(_currentAppointmentDate);
-            sendNotification(`Current appointment date found: ${currentAppointmentDate.toDateString()}`);
+            // sendNotification(`Current appointment date found: ${currentAppointmentDate.toDateString()}`);
         }
 
         const continueButton = page.locator("'Continue'").nth(0);
@@ -50,8 +51,6 @@ const main = async () => {
         const appointmentDateOption = page.locator('#appointments_consulate_appointment_date');
         await appointmentDateOption.click();
         const nextButton = page.locator('a.ui-datepicker-next');
-
-        sendNotification(`The tool will search for appointments on/after: ${lowerLimitDate.toDateString()}`);
 
         let currentCalendarTitle = await getCalendarTitle(page);
         while (currentCalendarTitle.getMonth() != lowerLimitDate.getMonth() || currentCalendarTitle.getFullYear() != lowerLimitDate.getFullYear()) {
@@ -120,4 +119,4 @@ const getCalendarTitle = async (page : Page) => {
 }
 
 main();
-setInterval(() => { main() }, genRandomInterval() * Math.random() * 60 * 1000);
+setInterval(() => { main() }, genRandomInterval() * 60 * 1000);
