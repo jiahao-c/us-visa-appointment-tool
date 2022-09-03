@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import { chromium } from "playwright";
 import type {Page} from "playwright";
-import { genRandomInterval, sendNotification } from "./util.js";
+import { genRandomTimeout, sendNotification } from "./util.js";
 
 
 const main = async () => {
@@ -107,6 +107,7 @@ const main = async () => {
             sendNotification("No appointments found");
         }
         await browser.close();
+        setTimeout(main, genRandomTimeout());
     } catch (err) {
         console.log(`Error: ${JSON.stringify(err)}`);
     }
@@ -119,4 +120,3 @@ const getCalendarTitle = async (page : Page) => {
 }
 
 main();
-setInterval(() => { main() }, genRandomInterval() * 60 * 1000);
